@@ -1,0 +1,17 @@
+# Run the predictive-scaling API locally with:  docker compose up --build
+# The service trains a small model on synthetic data at startup unless you mount
+# a pre-trained model and point PREDICTIVE_SCALING_MODEL at it.
+services:
+  api:
+    build: .
+    image: predictive-scaling:latest
+    ports:
+      - "8000:8000"
+    environment:
+      # Uncomment and mount a volume to serve a pre-trained model instead of the
+      # startup-trained synthetic one:
+      # PREDICTIVE_SCALING_MODEL: /models/model.joblib
+      PYTHONUNBUFFERED: "1"
+    # volumes:
+    #   - ./artifacts:/models:ro
+    restart: unless-stopped
